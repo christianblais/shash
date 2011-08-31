@@ -6,7 +6,7 @@ require './lib/version'
  
 Gem::Specification.new do |s|
   s.name        = "shash"
-  s.version     = Utilities::VERSION
+  s.version     = Shash::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Christian Blais"]
   s.email       = ["christ.blais@gmail.com"]
