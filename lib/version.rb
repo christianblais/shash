@@ -1,7 +1,7 @@
 class Shash
   MAJOR = 0
   MINOR = 0
-  BUILD = 2
+  BUILD = 3
 
   VERSION = "#{MAJOR}.#{MINOR}.#{BUILD}"
 end
