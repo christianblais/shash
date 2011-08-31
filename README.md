@@ -25,11 +25,11 @@ From a hash, it could not be simplier
 	Settings.name #=> "Shash!"
 
 You can of course set values directly from a Shash object
-  Settings = Shash.new
-  Settings.respond_to?("name") #=> false
-  Settings.name = "Shash!"
-  Settings.respond_to?("name") #=> true
-  Settings.name #=> "Shash!"
+	Settings = Shash.new
+	Settings.respond_to?("name") #=> false
+	Settings.name = "Shash!"
+	Settings.respond_to?("name") #=> true
+	Settings.name #=> "Shash!"
 
 From a YAML file, or any other key/value kind of file
-  Settings = YAML.load_file( "path/to/your/file.yml" ).to_shash
+	Settings = YAML.load_file( "path/to/your/file.yml" ).to_shash
