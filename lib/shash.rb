@@ -1,6 +1,4 @@
-class Shash
-  attr_reader :_hash  
-  
+class Shash  
   def initialize(hash={})
     @_hash = hash
   end
@@ -28,7 +26,7 @@ class Shash
   alias_method :key?, :has_key?
   
   def ==(other)
-    @_hash == other._hash
+    other == @_hash
   end
   
   def []=(key,value)
