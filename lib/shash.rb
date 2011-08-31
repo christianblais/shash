@@ -1,15 +1,15 @@
-class Shash  
-  attr_reader :hash  
+class Shash
+  attr_reader :_hash  
   
   def initialize(hash={})
-    @hash = hash
+    @_hash = hash
   end
 
   def method_missing(key, *args, &block)
     if key[/=$/]
-      @hash[key[0...-1]] = args.first
+      @_hash[key[0...-1]] = args.first
     else
-      if value = @hash[key.to_s]
+      if value = @_hash[key.to_s]
         case value
           when Hash
             Shash.new(value)
@@ -17,22 +17,22 @@ class Shash
             value
         end
       else
-        @hash.send(key, *args, &block)
+        @_hash.send(key, *args, &block)
       end
     end
   end
   
   def has_key?(key)
-    @hash.has_key?(key.to_s)
+    @_hash.has_key?(key.to_s)
   end
   alias_method :key?, :has_key?
   
   def ==(other)
-    @hash == other.hash
+    @_hash == other._hash
   end
   
   def []=(key,value)
-    @hash[key] = value
+    @_hash[key] = value
   end
 end
 
