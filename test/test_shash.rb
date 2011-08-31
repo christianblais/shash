@@ -24,10 +24,23 @@ describe Shash do
     h.should == {"y"=>{"z"=>0}}.to_shash
   end
   
-  it "#respond_to? should check for key existence correctly" do
+  it "#has_key? should check for key existence correctly" do
     h = {"a"=>1, "b"=>{"c"=>2}}.to_shash
     h.has_key?("z").should == false
     h.has_key?("b").should == true
     h.b.has_key?("c").should == true
   end
+  
+  it "#[] should still works as expected" do
+    h = {"a"=>1}.to_shash
+    h.a.should == 1
+    h["a"].should == 1
+  end
+  
+  it "#[]= should still works as expected" do
+    h = Shash.new
+    h["b"] = 2
+    h.b.should == 2
+  end
+  
 end

@@ -27,8 +27,12 @@ class Shash
   end
   alias_method :key?, :has_key?
   
-  def == other
+  def ==(other)
     @hash == other.hash
+  end
+  
+  def []=(key,value)
+    @hash[key] = value
   end
 end
 
