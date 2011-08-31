@@ -15,16 +15,19 @@ Test
 Usage
 -----
 Here his the simpliest scenario
+
     Settings = Shash.new({"name"=>"Shash!", "application"=>{"version"=>1}})
     Settings.name #=> "Shash!"
     Settings.application #=> {"version"=>1}
     Settings.application.version #=> 1
 
 From a hash, it could not be simplier
+
     Settings = {"name"=>"Shash!"}.to_shash
     Settings.name #=> "Shash!"
 
 You can of course set values directly from a Shash object
+
     Settings = Shash.new
     Settings.respond_to?("name") #=> false
     Settings.name = "Shash!"
@@ -32,4 +35,5 @@ You can of course set values directly from a Shash object
     Settings.name #=> "Shash!"
 
 From a YAML file, or any other key/value kind of file
+
     Settings = YAML.load_file( "path/to/your/file.yml" ).to_shash
