@@ -1,6 +1,6 @@
 Shash
 =====
-Shash provides quick way to handle configuration file, settings or other form of key/value store. It's based
+Shash provides a quick way to handle configuration file, settings or other form of key/value store. It's based
 on a single hash, but lets you set/read keys like attributes. Shash stands for StructHash or, for intimates,
 SuperHash.
 
@@ -14,7 +14,7 @@ Test
 
 Usage
 -----
-Here his the simpliest scenario
+Here is the simpliest scenario
 
     Settings = Shash.new({"name"=>"Shash!", "application"=>{"version"=>1}})
     Settings.name #=> "Shash!"
