@@ -22,11 +22,10 @@ class Shash
     end
   end
   
-  def respond_to?(key)
+  def has_key?(key)
     @hash.has_key?(key.to_s)
   end
-  alias_method :has_key?, :respond_to?
-  alias_method :key?, :respond_to?
+  alias_method :key?, :has_key?
   
   def == other
     @hash == other.hash

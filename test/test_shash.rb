@@ -26,8 +26,8 @@ describe Shash do
   
   it "#respond_to? should check for key existence correctly" do
     h = {"a"=>1, "b"=>{"c"=>2}}.to_shash
-    h.respond_to?("a").should == true
+    h.has_key?("z").should == false
     h.has_key?("b").should == true
-    h.b.key?("c").should == true
+    h.b.has_key?("c").should == true
   end
 end
