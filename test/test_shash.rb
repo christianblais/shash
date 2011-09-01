@@ -61,7 +61,8 @@ describe Shash do
   it "should handles all sort of fancy things" do
     h = Shash.new{ |k| k.upcase.reverse }
     h.test = "are you sure?"
-    h.has_key?(:test).should == true
+    h.has_key?("test").should == false
+    h.has_key?("TSET").should == true
     h.test.should == "are you sure?"
     h.should == {"TSET"=>"are you sure?"}.to_shash
   end
