@@ -10,9 +10,9 @@ class Shash
 
   def method_missing(key, *args, &block)
     if key[/=$/]
-      @_hash[_key(key[0...-1].to_sym)] = args.first
+      @_hash[_key(key[0...-1])] = args.first
     else
-      if value = @_hash[_key(key)]
+      if value = @_hash[_key(key.to_s)]
         case value
           when Hash
             Shash.new(value, &@_proc)
@@ -26,7 +26,7 @@ class Shash
   end
   
   def has_key?(key)
-    @_hash.has_key?(_key(key))
+    @_hash.has_key?(_key(key.to_s))
   end
   alias_method :key?, :has_key?
   
