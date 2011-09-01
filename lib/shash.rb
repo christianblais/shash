@@ -26,7 +26,7 @@ class Shash
   end
   
   def has_key?(key)
-    @_hash.has_key?(_key(key.to_s))
+    @_hash.has_key?(key)
   end
   alias_method :key?, :has_key?
   
