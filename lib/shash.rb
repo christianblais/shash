@@ -1,16 +1,21 @@
 class Shash  
-  def initialize(hash={})
+  def initialize(hash={}, &proc)
     @_hash = hash
+    @_proc = proc
   end
+  
+  def _key key
+    @_proc ? @_proc.call(key) : key
+  end 
 
   def method_missing(key, *args, &block)
     if key[/=$/]
-      @_hash[key[0...-1]] = args.first
+      @_hash[_key(key[0...-1].to_sym)] = args.first
     else
-      if value = @_hash[key.to_s]
+      if value = @_hash[_key(key)]
         case value
           when Hash
-            Shash.new(value)
+            Shash.new(value, &@_proc)
           else
             value
         end
@@ -21,7 +26,7 @@ class Shash
   end
   
   def has_key?(key)
-    @_hash.has_key?(key.to_s)
+    @_hash.has_key?(_key(key))
   end
   alias_method :key?, :has_key?
   
