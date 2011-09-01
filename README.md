@@ -34,6 +34,14 @@ You can of course set values directly from a Shash object
     Settings.has_key?("name") #=> true
     Settings.name #=> "Shash!"
 
+Slash keys are defaulted to strings. But what about symbols? You can tell Shash to handle keys the way you want
+
+    Settings = Shash.new{ |key| key.to_sym }
+    Settings.name = "Shash!"
+    Settings.has_key?(:name) #=> true
+    Settings.inspect #=> {:name=>"Shash!"}
+    Settings.name #=> "Shash!"
+
 From a YAML file, or any other key/value kind of file
 
-    Settings = YAML.load_file( "path/to/your/file.yml" ).to_shash
+    Settings = YAML.load_file( File.open("path/to/your/file.yml") ).to_shash
