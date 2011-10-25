@@ -5,14 +5,14 @@ class Shash
   end
   
   def _key key
-    @_proc ? @_proc.call(key) : key
+    @_proc ? @_proc.call(key) : key.to_s
   end 
 
   def method_missing(key, *args, &block)
     if key[/=$/]
       @_hash[_key(key[0...-1])] = args.first
     else
-      if value = @_hash[_key(key.to_s)]
+      if value = @_hash[_key(key)]
         case value
           when Hash
             Shash.new(value, &@_proc)
@@ -40,7 +40,7 @@ class Shash
 end
 
 class Hash
-  def to_shash
-    Shash.new(self)
+  def to_shash &proc
+    Shash.new(self, &proc)
   end
 end
