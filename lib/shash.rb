@@ -20,7 +20,11 @@ class Shash
             value
         end
       else
-        @_hash.send(key, *args, &block)
+        begin
+          @_hash.send(key, *args, &block)
+        rescue NoMethodError
+          nil
+        end
       end
     end
   end
