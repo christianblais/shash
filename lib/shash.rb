@@ -1,27 +1,18 @@
-class Shash  
-  def initialize(hash={}, &proc)
-    @_hash = hash
-    @_proc = proc
+class Shash
+  def initialize(hash={})
+    @hash = {}
+    init!(hash)
   end
-  
-  def _key key
-    @_proc ? @_proc.call(key) : key.to_s
-  end 
 
   def method_missing(key, *args, &block)
     if key[/=$/]
-      @_hash[_key(key[0...-1])] = args.first
+      self[key[0...-1]] = args.first
     else
-      if value = @_hash[_key(key)]
-        case value
-          when Hash
-            Shash.new(value, &@_proc)
-          else
-            value
-        end
+      if @hash.key?(key)
+        @hash[key]
       else
         begin
-          @_hash.send(key, *args, &block)
+          @hash.send(key, *args, &block)
         rescue NoMethodError
           nil
         end
@@ -29,22 +20,36 @@ class Shash
     end
   end
   
-  def has_key?(key)
-    @_hash.has_key?(key)
-  end
-  alias_method :key?, :has_key?
-  
   def ==(other)
-    other == @_hash
+    other == @hash
   end
   
   def []=(key,value)
-    @_hash[key] = value
+    @hash[key.respond_to?(:to_sym) ? key.to_sym : key] = shashify(value)
+  end
+
+  protected
+
+  def init!(hash)
+    hash.each do |k,v|
+      self[k] = v
+    end
+  end
+
+  def shashify(value)
+    case value
+      when Hash
+        Shash.new(value)
+      when Array
+        value.map{|v| self.shashify(v)}
+      else
+        value
+    end
   end
 end
 
 class Hash
-  def to_shash &proc
-    Shash.new(self, &proc)
+  def to_shash
+    Shash.new(self)
   end
 end
