@@ -25,23 +25,25 @@ From a hash, it could not be simplier
 
     Settings = {"name"=>"Shash!"}.to_shash
     Settings.name #=> "Shash!"
+    Settings[:name] #=> "Shash!"
 
 You can of course set values directly from a Shash object
 
     Settings = Shash.new
-    Settings.has_key?("name") #=> false
-    Settings.name = "Shash!"
-    Settings.has_key?("name") #=> true
-    Settings.name #=> "Shash!"
-
-Slash keys are defaulted to strings. But what about symbols? You can tell Shash to handle keys the way you want
-
-    Settings = Shash.new{ |key| key.to_sym }
+    Settings.has_key?(:name) #=> false
     Settings.name = "Shash!"
     Settings.has_key?(:name) #=> true
-    Settings.inspect #=> {:name=>"Shash!"}
     Settings.name #=> "Shash!"
+
+Shash can also deals with arrays
+
+    h = {:a => 1, :b => [{:ba => 1, :bb => 2}, [{:ccc => 3}]]}.to_shash
+    h.a #=> 1
+    h.b #=> [{:ba => 1, :bb => 2}, [{:ccc => 3}]]
+    h.b[0] #=> {:ba => 1, :bb => 2}
+    h.b[1][0].ccc #=> 3
+    h.b.last.first.ccc #=> 3
 
 From a YAML file, or any other key/value kind of file
 
-    Settings = YAML.load_file( File.open("path/to/your/file.yml") ).to_shash
+    Settings = YAML::load( File.open("path/to/your/file.yml") ).to_shash
