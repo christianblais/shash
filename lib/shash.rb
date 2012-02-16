@@ -1,18 +1,19 @@
 class Shash
-  def initialize(hash={})
-    @hash = {}
-    init!(hash)
+  def initialize(source={})
+    source.each do |k,v|
+      self[k] = v
+    end
   end
 
   def method_missing(key, *args, &block)
     if key[/=$/]
       self[key[0...-1]] = args.first
     else
-      if @hash.key?(key)
-        @hash[key]
+      if hash.key?(key)
+        hash[key]
       else
         begin
-          @hash.send(key, *args, &block)
+          hash.send(key, *args, &block)
         rescue NoMethodError
           nil
         end
@@ -21,19 +22,17 @@ class Shash
   end
   
   def ==(other)
-    other == @hash
+    other == hash
   end
   
-  def []=(key,value)
-    @hash[key.respond_to?(:to_sym) ? key.to_sym : key] = shashify(value)
+  def []=(key, value)
+    hash[key.respond_to?(:to_sym) ? key.to_sym : key] = shashify(value)
   end
 
   protected
-
-  def init!(hash)
-    hash.each do |k,v|
-      self[k] = v
-    end
+  
+  def hash
+    @hash ||= {}
   end
 
   def shashify(value)
@@ -41,7 +40,7 @@ class Shash
       when Hash
         Shash.new(value)
       when Array
-        value.map{|v| self.shashify(v)}
+        value.map{|v| shashify(v)}
       else
         value
     end
