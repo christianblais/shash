@@ -13,7 +13,7 @@ class Shash
         hash[key]
       else
         begin
-          hash.send(key, *args, &block)
+          hash.__send__(key, *args, &block)
         rescue NoMethodError
           nil
         end
