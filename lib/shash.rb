@@ -8,16 +8,10 @@ class Shash
   def method_missing(key, *args, &block)
     if key[/=$/]
       self[key[0...-1]] = args.first
-    else
-      if hash.key?(key)
-        hash[key]
-      else
-        begin
-          hash.__send__(key, *args, &block)
-        rescue NoMethodError
-          nil
-        end
-      end
+    elsif hash.key?(key)
+      hash[key]
+    elsif hash.respond_to?(key)
+      hash.__send__(key, *args, &block)
     end
   end
   
