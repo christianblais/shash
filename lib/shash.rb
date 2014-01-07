@@ -14,6 +14,10 @@ class Shash
       hash.__send__(key, *args, &block)
     end
   end
+
+  def respond_to_missing?(method_name, include_private = false)
+    method_name[/=$/] || hash.key?(method_name) || hash.respond_to?(method_name) || super
+  end
   
   def ==(other)
     other == hash
