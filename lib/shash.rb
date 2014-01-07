@@ -27,6 +27,11 @@ class Shash
     hash[key.respond_to?(:to_sym) ? key.to_sym : key] = shashify(value)
   end
 
+  def to_h
+    unshashify(self)
+  end
+  alias_method :to_hash, :to_h
+
   protected
   
   def hash
@@ -39,6 +44,21 @@ class Shash
         Shash.new(value)
       when Array
         value.map{|v| shashify(v)}
+      else
+        value
+    end
+  end
+
+  def unshashify(value)
+    case value
+      when Shash
+        h = {}
+        value.hash.each do |k,v|
+          h[k] = unshashify(v)
+        end
+        h
+      when Array
+        value.map{|v| unshashify(v)}
       else
         value
     end
